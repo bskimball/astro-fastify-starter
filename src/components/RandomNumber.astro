@@ -1,0 +1,19 @@
+<script>
+  import { client } from '../utils/client'
+
+  // @ts-ignore
+  client.randomNumber.subscribe(undefined, {
+    onData(data) {
+      console.log({ data })
+      let el = document.getElementById('holder')
+      if (el) {
+        // @ts-ignore
+        el.innerText = data.randomNumber.toString()
+      }
+    },
+  })
+</script>
+
+<div>
+  <div id="holder" class="text-slate-900">0</div>
+</div>
