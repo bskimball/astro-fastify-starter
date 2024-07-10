@@ -29,12 +29,10 @@ export const client = createTRPCClient<AppRouter>({
       },
       true: wsLink({
         client: wsClient,
-        // @ts-ignore
         transformer: superjson,
       }),
       false: httpBatchLink({
         url,
-        // @ts-ignore
         transformer: superjson,
         // async headers() {
         //   return {
