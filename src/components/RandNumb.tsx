@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { client } from '../utils/client.ts'
+import { client } from '../api/client.ts'
 
 export default function RandNumb() {
   const [count, setCount] = useState(0)

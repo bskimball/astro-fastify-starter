@@ -1,9 +1,8 @@
 <script>
-  import { client } from '../utils/client'
+  import { client } from '../api/client.ts'
 
   client.randomNumber.subscribe(undefined, {
     onData(data) {
-      console.log({ data })
       let el = document.getElementById('holder')
       if (el) {
         el.innerText = data.randomNumber.toString()

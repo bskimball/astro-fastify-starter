@@ -4,8 +4,8 @@ import {
   fastifyTRPCPlugin,
   type FastifyTRPCPluginOptions,
 } from '@trpc/server/adapters/fastify'
-import { createContext } from './context.js'
-import { type AppRouter, appRouter } from './router.js'
+import { createContext } from './context.ts'
+import { type AppRouter, appRouter } from './router.ts'
 import ws from '@fastify/websocket'
 
 export async function createServer() {

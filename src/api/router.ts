@@ -34,7 +34,7 @@ export const appRouter = t.router({
       return user
     }),
   randomNumber: t.procedure.subscription(() => {
-    return observable((emit) => {
+    return observable<{ randomNumber: number }>((emit) => {
       const timer = setInterval(() => {
         let randomNumber = Math.random()
         emit.next({ randomNumber })

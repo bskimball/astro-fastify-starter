@@ -6,9 +6,10 @@
     "dev:astro": "astro dev",
     "dev:fastify": "tsx watch ./src/api/dev.ts",
     "dev": "NODE_ENV=development run-p dev:*",
-    "build:astro": "astro check && astro build",
-    "build:fastify": "rollup --config ./server.config.mjs && tsc -p ./tsconfig.server.json",
-    "build": "run-s build:astro build:fastify",
+    "build:astro": "astro build",
+    "build:fastify": "rollup --config ./rollup.server.config.js --configPlugin typescript",
+    "build:check": "tsc",
+    "build": "run-s build:astro build:fastify build:check",
     "start": "node ./run-server.mjs",
     "astro": "astro"
   },
