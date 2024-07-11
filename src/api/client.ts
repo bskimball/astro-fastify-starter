@@ -9,11 +9,11 @@ import {
 } from '@trpc/client'
 import superjson from 'superjson'
 
-type RouterInput = inferRouterInputs<AppRouter>
-type RouterOutput = inferRouterOutputs<AppRouter>
+export type RouterInput = inferRouterInputs<AppRouter>
+export type RouterOutput = inferRouterOutputs<AppRouter>
 
-type RandomNumberInput = RouterInput['randomNumber']
-type RandomNumberOutput = RouterOutput['randomNumber']
+export type RandomNumberInput = RouterInput['randomNumber']
+export type RandomNumberOutput = RouterOutput['randomNumber']
 
 const url = 'ws://localhost:8080/trpc'
 
@@ -34,11 +34,6 @@ export const client = createTRPCClient<AppRouter>({
       false: httpBatchLink({
         url,
         transformer: superjson,
-        // async headers() {
-        //   return {
-        //
-        //   }
-        // }
       }),
     }),
   ],

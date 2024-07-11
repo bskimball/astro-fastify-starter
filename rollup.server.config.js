@@ -10,6 +10,6 @@ export default {
     entryFileNames: '[name].mjs',
   },
   plugins: [
-    typescript(),
+    typescript({ allowImportingTsExtensions: true, noEmit: true }),
   ],
 }
