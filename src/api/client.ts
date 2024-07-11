@@ -15,16 +15,15 @@ export type RouterOutput = inferRouterOutputs<AppRouter>
 export type RandomNumberInput = RouterInput['randomNumber']
 export type RandomNumberOutput = RouterOutput['randomNumber']
 
-const url = 'ws://localhost:8080/trpc'
-
 const wsClient = createWSClient({
-  url,
+  url: 'ws://localhost:8080/trpc',
 })
 
 export const client = createTRPCClient<AppRouter>({
   links: [
     splitLink({
       condition(op) {
+        console.log({ op })
         return op.type === 'subscription'
       },
       true: wsLink({
@@ -32,7 +31,7 @@ export const client = createTRPCClient<AppRouter>({
         transformer: superjson,
       }),
       false: httpBatchLink({
-        url,
+        url: 'http://localhost:8080/trpc',
         transformer: superjson,
       }),
     }),
