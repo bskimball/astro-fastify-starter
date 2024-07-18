@@ -96,7 +96,7 @@ export const authRouter = router({
 
       if (users.length < 1) {
         result.error = 'The user does not exist.'
-        result.redirect = '/register'
+        result.redirect = '/'
         return result
       }
 
@@ -131,7 +131,6 @@ export const authRouter = router({
       return result
     }),
   logout: publicProcedure.input(z.undefined()).mutation(async (opts) => {
-    console.log('CONTEXT', opts.ctx)
     const result: Result = {
       error: null,
       ok: false,
