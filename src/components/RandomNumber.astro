@@ -4,7 +4,10 @@
   client.randomNumber.subscribe(undefined, {
     onData(data) {
       let el = document.getElementById('holder')
-      el.innerText = data.randomNumber.toString()
+
+      if (el) {
+        el.innerText = data.randomNumber.toString()
+      }
     },
   })
 </script>

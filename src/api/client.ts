@@ -12,18 +12,29 @@ import superjson from 'superjson'
 export type RouterInput = inferRouterInputs<AppRouter>
 export type RouterOutput = inferRouterOutputs<AppRouter>
 
-export type RandomNumberInput = RouterInput['randomNumber']
-export type RandomNumberOutput = RouterOutput['randomNumber']
+function getLinks() {
+  if (typeof window === 'undefined') {
+    return [
+      httpBatchLink({
+        url: '/trpc',
+        transformer: superjson,
+        fetch(url, options) {
+          return fetch(url, {
+            ...options,
+            credentials: 'include',
+          })
+        },
+      }),
+    ]
+  }
 
-const wsClient = createWSClient({
-  url: 'ws://localhost:8080/trpc',
-})
+  const wsClient = createWSClient({
+    url: '/trpc',
+  })
 
-export const client = createTRPCClient<AppRouter>({
-  links: [
+  return [
     splitLink({
       condition(op) {
-        console.log({ op })
         return op.type === 'subscription'
       },
       true: wsLink({
@@ -33,7 +44,17 @@ export const client = createTRPCClient<AppRouter>({
       false: httpBatchLink({
         url: 'http://localhost:8080/trpc',
         transformer: superjson,
+        fetch(url, options) {
+          return fetch(url, {
+            ...options,
+            credentials: 'include',
+          })
+        },
       }),
     }),
-  ],
+  ]
+}
+
+export const client = createTRPCClient<AppRouter>({
+  links: getLinks(),
 })

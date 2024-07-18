@@ -11,5 +11,5 @@ export default {
   },
   plugins: [
     typescript({ allowImportingTsExtensions: true, noEmit: true }),
-  ],
+  ]
 }

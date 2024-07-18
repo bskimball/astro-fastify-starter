@@ -1,9 +1,9 @@
-import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import { observable } from '@trpc/server/observable'
-import superjson from 'superjson'
+import { authRouter } from './routers/authRouter.ts'
+import { router, publicProcedure } from './trpc.ts'
 
-type User = {
+export type User = {
   id: string
   name?: string
   bio?: string
@@ -11,15 +11,11 @@ type User = {
 
 const users: Record<string, User> = {}
 
-export const t = initTRPC.create({
-  transformer: superjson,
-})
-
-export const appRouter = t.router({
-  getUserById: t.procedure.input(z.string()).query((opts) => {
+export const appRouter = router({
+  getUserById: publicProcedure.input(z.string()).query((opts) => {
     return users[opts.input]
   }),
-  createUser: t.procedure
+  createUser: publicProcedure
     .input(
       z.object({
         name: z.string().min(3),
@@ -33,7 +29,7 @@ export const appRouter = t.router({
       users[user.id] = user
       return user
     }),
-  randomNumber: t.procedure.subscription(() => {
+  randomNumber: publicProcedure.subscription(() => {
     return observable<{ randomNumber: number }>((emit) => {
       const timer = setInterval(() => {
         let randomNumber = Math.random()
@@ -44,6 +40,7 @@ export const appRouter = t.router({
       }
     })
   }),
+  auth: authRouter,
 })
 
 export type AppRouter = typeof appRouter

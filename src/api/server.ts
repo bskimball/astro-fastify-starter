@@ -7,9 +7,15 @@ import {
 import { createContext } from './context.ts'
 import { type AppRouter, appRouter } from './router.ts'
 import ws from '@fastify/websocket'
+import fastifyCookie from '@fastify/cookie'
+import type { FastifyCookieOptions } from '@fastify/cookie'
 
 export async function createServer() {
   const fastify = Fastify({ logger: true, maxParamLength: 5000 })
+
+  await fastify.register(fastifyCookie, {
+    secret: 'fastrotify',
+  } satisfies FastifyCookieOptions)
 
   await fastify.register(fastifyMiddie)
 
