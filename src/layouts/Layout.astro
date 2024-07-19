@@ -9,6 +9,7 @@ interface Props {
 
 const { title } = Astro.props
 const { user } = Astro.locals
+const { pathname } = Astro.url
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const { user } = Astro.locals
     <ViewTransitions />
   </head>
   <body>
-    <Navigation user={user} client:visible />
+    <Navigation user={user} currentPath={pathname} client:visible />
     <slot />
   </body>
 </html>

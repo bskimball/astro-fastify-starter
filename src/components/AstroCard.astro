@@ -1,0 +1,18 @@
+---
+interface Props {
+  title: string
+  body: string | HTMLElement
+  href: string
+}
+
+const { href, title, body } = Astro.props
+---
+
+<div class="p-4 rounded-xl shadow-xl">
+  <a href={href} class="text-lg">
+    <h2>
+      {title}
+    </h2>
+  </a>
+  <slot />
+</div>
