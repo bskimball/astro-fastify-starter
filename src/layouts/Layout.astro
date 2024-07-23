@@ -1,7 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
-import Navigation from '../components/Navigation.tsx'
-import { Astro } from 'astro/env'
+import Navigation from '../components/Navigation'
 
 interface Props {
   title: string
@@ -21,10 +20,21 @@ const { pathname } = Astro.url
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
     <ViewTransitions />
   </head>
   <body>
-    <Navigation user={user} currentPath={pathname} client:visible />
+    <Navigation user={user} currentPath={pathname} client:only="react" />
     <slot />
   </body>
 </html>

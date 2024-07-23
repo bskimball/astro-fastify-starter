@@ -7,6 +7,7 @@ import {
 import type { User } from 'lucia'
 import { client } from '../api/client.ts'
 import { navigate } from 'astro:transitions/client'
+import DarkToggle from './DarkToggle.tsx'
 
 type Props = {
   user?: User
@@ -15,17 +16,22 @@ type Props = {
 
 export default function Navigation({ user, currentPath }: Props) {
   return (
-    <Navbar>
+    <Navbar maxWidth="2xl">
+      <NavbarContent justify="start">
+        <NavbarItem isActive={currentPath === '/'}>
+          <a href="/">Home</a>
+        </NavbarItem>
+        <NavbarItem isActive={currentPath === '/examples'}>
+          <a href="/examples">Examples</a>
+        </NavbarItem>
+      </NavbarContent>
       <NavbarBrand className="flex flex-col">
         <div className="text-3xl font-bold">Fastro</div>
         <p className="font-bold text-inherit">Astro + Fastify Starter</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="end">
-        <NavbarItem isActive={currentPath === '/'}>
-          <a href="/">Home</a>
-        </NavbarItem>
-        <NavbarItem isActive={currentPath === '/examples'}>
-          <a href="/examples">Example</a>
+        <NavbarItem>
+          <DarkToggle />
         </NavbarItem>
         {!user ? (
           <>

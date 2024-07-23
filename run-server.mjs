@@ -15,8 +15,6 @@ import cors from '@fastify/cors'
   })
 
   fastify.use((req, res, next) => {
-    console.log({ req, res })
-
     ssrHandler(req, res, next)
   })
 

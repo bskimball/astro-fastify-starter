@@ -57,6 +57,7 @@ export default function LoginForm() {
               onChange={onChange}
               onBlur={onBlur}
               validationBehavior="aria"
+              variant="faded"
               isInvalid={invalid}
               label={'Username'}
               className="max-w-xs"
@@ -82,6 +83,7 @@ export default function LoginForm() {
               label={'Password'}
               className="max-w-xs"
               type={!visible ? 'password' : 'text'}
+              variant="faded"
               endContent={
                 <button
                   className="focus:outline-none"

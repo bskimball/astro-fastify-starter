@@ -83,6 +83,7 @@ export default function RegisterForm() {
               className="max-w-xs"
               type={'text'}
               errorMessage={error?.message}
+              variant="faded"
             />
           )}
         />
@@ -102,11 +103,13 @@ export default function RegisterForm() {
               isInvalid={invalid}
               label={'Password'}
               className="max-w-xs"
+              variant="faded"
               type={!visible ? 'password' : 'text'}
               endContent={
                 <button
                   className="focus:outline-none"
                   onClick={() => setVisible(!visible)}
+                  type="button"
                 >
                   {visible ? (
                     <FaEye className="text-2xl text-default-400 pointer-events-none" />
@@ -136,10 +139,12 @@ export default function RegisterForm() {
               label={'Password Again'}
               className="max-w-xs"
               type={!visible ? 'password' : 'text'}
+              variant="faded"
               endContent={
                 <button
                   className="focus:outline-none"
                   onClick={() => setVisible(!visible)}
+                  type="button"
                 >
                   {visible ? (
                     <FaEye className="text-2xl text-default-400 pointer-events-none" />
