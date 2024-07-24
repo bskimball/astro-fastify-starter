@@ -3,13 +3,9 @@ import { useEffect, useState } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa6'
 
 function getInitialState(): boolean {
-  console.log(typeof window)
-
   if (typeof window === 'undefined') {
     return false
   }
-
-  console.log(localStorage.theme)
 
   return (
     localStorage.theme === 'dark' ||
@@ -19,7 +15,11 @@ function getInitialState(): boolean {
 }
 
 export default function DarkToggle() {
-  const [isSelected, setIsSelected] = useState<boolean>(getInitialState())
+  const [isSelected, setIsSelected] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsSelected(getInitialState())
+  }, [])
 
   useEffect(() => {
     if (isSelected) {

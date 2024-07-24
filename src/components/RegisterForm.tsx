@@ -6,7 +6,7 @@ import { Input } from '@nextui-org/input'
 import { Button } from '@nextui-org/button'
 import { client } from '../api/client.ts'
 import { useState } from 'react'
-import { FaEyeSlash, FaEye } from 'react-icons/fa6'
+import { FaEyeSlash, FaEye, FaPaperPlane } from 'react-icons/fa6'
 import { navigate } from 'astro:transitions/client'
 
 const schema = z
@@ -159,7 +159,7 @@ export default function RegisterForm() {
         />
         <div>
           <Button color="primary" type="submit">
-            Submit
+            Submit <FaPaperPlane />
           </Button>
         </div>
       </Form>
