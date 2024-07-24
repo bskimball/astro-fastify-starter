@@ -15,7 +15,7 @@ function getInitialState(): boolean {
 }
 
 export default function DarkToggle() {
-  const [isSelected, setIsSelected] = useState<boolean>(false)
+  const [isSelected, setIsSelected] = useState(() => getInitialState())
 
   useEffect(() => {
     setIsSelected(getInitialState())

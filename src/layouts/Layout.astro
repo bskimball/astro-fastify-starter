@@ -34,7 +34,7 @@ const { pathname } = Astro.url
     <ViewTransitions />
   </head>
   <body>
-    <Navigation user={user} currentPath={pathname} client:load />
+    <Navigation user={user} currentPath={pathname} client:only="react" />
     <slot />
   </body>
 </html>
