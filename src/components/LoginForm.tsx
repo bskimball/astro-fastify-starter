@@ -63,6 +63,7 @@ export default function LoginForm() {
               className="max-w-xs"
               type={'text'}
               errorMessage={error?.message}
+              autoComplete="username"
             />
           )}
         />
@@ -84,6 +85,7 @@ export default function LoginForm() {
               className="max-w-xs"
               type={!visible ? 'password' : 'text'}
               variant="faded"
+              autoComplete="current-password"
               endContent={
                 <button
                   className="focus:outline-none"

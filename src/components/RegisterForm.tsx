@@ -84,6 +84,7 @@ export default function RegisterForm() {
               type={'text'}
               errorMessage={error?.message}
               variant="faded"
+              autoComplete="off"
             />
           )}
         />
@@ -105,6 +106,7 @@ export default function RegisterForm() {
               className="max-w-xs"
               variant="faded"
               type={!visible ? 'password' : 'text'}
+              autoComplete="off"
               endContent={
                 <button
                   className="focus:outline-none"
@@ -140,6 +142,7 @@ export default function RegisterForm() {
               className="max-w-xs"
               type={!visible ? 'password' : 'text'}
               variant="faded"
+              autoComplete="off"
               endContent={
                 <button
                   className="focus:outline-none"
