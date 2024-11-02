@@ -1,12 +1,15 @@
-import { router, publicProcedure } from '../trpc.ts'
+import { router, publicProcedure } from '@/api/trpc.ts'
 import { z } from 'zod'
-import { generateIdFromEntropySize } from 'lucia'
-import { hash } from '@node-rs/argon2'
-import { db } from '../../db.ts'
-import { lucia } from '../../auth.ts'
 import { eq } from 'drizzle-orm'
-import { verify } from '@node-rs/argon2'
-import { userTable } from '../../schema.ts'
+import { userTable, db } from '@/schema.ts'
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+  invalidateSession,
+  deleteSessionTokenCookie,
+} from '@/session.ts'
+import { hash, verify } from '@node-rs/argon2'
 
 type Result = {
   error: null | string
@@ -34,7 +37,6 @@ export const authRouter = router({
         redirect: '',
       }
 
-      const userId = generateIdFromEntropySize(10)
       const passwordHash = await hash(input.password, {
         memoryCost: 19456,
         timeCost: 2,
@@ -52,20 +54,18 @@ export const authRouter = router({
         return result
       }
 
-      await db.insert(userTable).values({
-        username: input.username,
-        id: userId,
-        password_hash: passwordHash,
-      })
+      const insertUser = await db
+        .insert(userTable)
+        .values({
+          username: input.username,
+          password_hash: passwordHash,
+        })
+        .returning({ id: userTable.id })
 
-      const session = await lucia.createSession(userId, {})
-      const sessionCookie = lucia.createSessionCookie(session.id)
+      const token = generateSessionToken()
+      const session = await createSession(token, insertUser[0].id)
 
-      opts.ctx.res.setCookie(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      )
+      setSessionTokenCookie(opts.ctx, token, session.expiresAt)
 
       result.ok = true
       result.redirect = '/login'
@@ -117,14 +117,10 @@ export const authRouter = router({
         return result
       }
 
-      const session = await lucia.createSession(existingUser.id, {})
-      const sessionCookie = lucia.createSessionCookie(session.id)
-
-      opts.ctx.res.setCookie(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      )
+      if (opts.ctx.session) {
+        await invalidateSession(opts.ctx.session.id)
+        deleteSessionTokenCookie(opts.ctx)
+      }
 
       result.ok = true
       result.redirect = '/'
@@ -142,15 +138,8 @@ export const authRouter = router({
       return result
     }
 
-    await lucia.invalidateSession(opts.ctx.session.id)
-
-    const sessionCookie = lucia.createBlankSessionCookie()
-
-    opts.ctx.res.setCookie(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes,
-    )
+    await invalidateSession(opts.ctx.session.id)
+    deleteSessionTokenCookie(opts.ctx)
 
     result.redirect = '/login'
     result.ok = true

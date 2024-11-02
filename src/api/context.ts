@@ -1,8 +1,7 @@
 import type { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify'
 import cookie from 'cookie'
-import { lucia } from '../auth.ts'
-import { type User } from './router'
-import { type Session } from 'lucia'
+import type { User, Session } from '@/schema.ts'
+import { sessionCookieName, validateSessionToken } from '@/session.ts'
 
 type Result = {
   req: CreateFastifyContextOptions['req']
@@ -21,9 +20,9 @@ export async function createContext({ req, res }: CreateFastifyContextOptions) {
     session: null,
   }
 
-  if (cookies[lucia.sessionCookieName]) {
-    const { user, session } = await lucia.validateSession(
-      cookies[lucia.sessionCookieName],
+  if (cookies[sessionCookieName]) {
+    const { user, session } = await validateSessionToken(
+      cookies[sessionCookieName],
     )
     result.user = user
     result.session = session

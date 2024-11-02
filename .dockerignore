@@ -1,0 +1,5 @@
+.idea/
+.astro/
+dist/
+node_modules/
+compose.yaml

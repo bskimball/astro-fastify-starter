@@ -21,15 +21,24 @@ const { pathname } = Astro.url
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <script is:inline>
-      if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
+      function setDarkMode(document) {
+        if (
+          localStorage.theme === 'dark' ||
+          (!('theme' in localStorage) &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          document.documentElement.classList.add('dark')
+        } else {
+          document.documentElement.classList.remove('dark')
+        }
       }
+
+      setDarkMode(document)
+
+      document.addEventListener('astro:before-swap', (event) => {
+        // prevents screen flashing
+        setDarkMode(event.newDocument)
+      })
     </script>
     <ViewTransitions />
   </head>
