@@ -122,6 +122,10 @@ export const authRouter = router({
         deleteSessionTokenCookie(opts.ctx)
       }
 
+      const token = generateSessionToken()
+      const session = await createSession(token, existingUser.id)
+      setSessionTokenCookie(opts.ctx, token, session.expiresAt)
+
       result.ok = true
       result.redirect = '/'
       return result
