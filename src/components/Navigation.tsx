@@ -4,8 +4,8 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/navbar'
-import type { User } from 'lucia'
-import { client } from '../api/client.ts'
+import type { User } from '@/schema.ts'
+import { client } from '@/api/client.ts'
 import { navigate } from 'astro:transitions/client'
 import DarkToggle from './DarkToggle.tsx'
 

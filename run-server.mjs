@@ -3,7 +3,6 @@ import { createServer } from './dist/server/api.mjs'
 import fastifyStatic from '@fastify/static'
 import { fileURLToPath } from 'node:url'
 import cors from '@fastify/cors'
-
 ;(async () => {
   const fastify = await createServer()
 
@@ -21,9 +20,9 @@ import cors from '@fastify/cors'
   })
 
   try {
-    await fastify.listen({ port: 8080 })
+    await fastify.listen({ port: 8080, host: '0.0.0.0' })
   } catch (err) {
-    fastify.logger.error(err)
+    fastify.log.error(err)
     process.exit(1)
   }
 })()

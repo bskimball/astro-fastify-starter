@@ -42,7 +42,7 @@ function getLinks() {
         transformer: superjson,
       }),
       false: httpBatchLink({
-        url: 'http://localhost:8080/trpc',
+        url: '/trpc',
         transformer: superjson,
         fetch(url, options) {
           return fetch(url, {
