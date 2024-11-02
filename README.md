@@ -6,6 +6,8 @@ This example is based on the fastify example in the
 The main difference is this uses typescript. It also has an example of using the
 [trpc fastify adapter](https://trpc.io/docs/server/adapters/fastify), so you have end-to-end type safety.
 
+[Blog Post](https://brian-kimball.com/blog/fastify-astro-starter)
+
 ## Auth
 
 Auth was set up for [Lucia](https://lucia-auth.com/)
