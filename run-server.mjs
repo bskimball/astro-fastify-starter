@@ -20,6 +20,7 @@ import cors from '@fastify/cors'
   })
 
   try {
+    // listen for all IPs in Docker
     await fastify.listen({ port: 8080, host: '0.0.0.0' })
   } catch (err) {
     fastify.log.error(err)

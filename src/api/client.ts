@@ -11,7 +11,7 @@ import superjson from 'superjson'
 
 export type RouterInput = inferRouterInputs<AppRouter>
 export type RouterOutput = inferRouterOutputs<AppRouter>
-
+// WIP
 function getLinks() {
   if (typeof window === 'undefined') {
     return [

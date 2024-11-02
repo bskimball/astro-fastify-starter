@@ -4,6 +4,7 @@ import {
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/navbar'
+// from schema
 import type { User } from '@/schema.ts'
 import { client } from '@/api/client.ts'
 import { navigate } from 'astro:transitions/client'
