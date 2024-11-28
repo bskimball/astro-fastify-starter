@@ -4,7 +4,7 @@
   "version": "0.0.2",
   "scripts": {
     "dev:astro": "astro dev",
-    "dev:fastify": "tsx watch run-server.mjs",
+    "dev:fastify": "tsx watch src/api/dev.ts",
     "dev": "NODE_ENV=development run-p dev:*",
     "build:astro": "astro build",
     "build:fastify": "rollup --config rollup-server.config.mjs --configPlugin typescript",
