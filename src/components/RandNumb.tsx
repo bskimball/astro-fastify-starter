@@ -14,7 +14,7 @@ export default function RandNumb() {
   }, [])
 
   return (
-    <div className="text-slate-900">
+    <div>
       {count}
       <div>
         <Button color={'primary'}>test client</Button>
