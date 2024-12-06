@@ -1,3 +1,6 @@
+# *** Latest ***
+I have updated to Astro v5 and React 19. Since the Astro/react integration has not yet updated their deps your NPM install will need to include the --peer-legacy-deps flag. I have removed Next ui and react-hook-form and it is using react action api for forms. 
+
 # Astro Fastify Starter
 
 This is an example repo of having astro and fastify in the same app.
