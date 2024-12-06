@@ -1,0 +1,42 @@
+---
+import DarkToggle from './DarkToggle.tsx'
+import LogoutButton from './LogoutButton'
+
+const { user } = Astro.locals
+---
+
+<div>
+  <nav>
+    <div>
+      <a href="/">Home</a>
+    </div>
+    <div>
+      <a href="/examples">Examples</a>
+    </div>
+  </nav>
+  <div className="flex flex-col">
+    <div className="text-3xl font-bold">Fastro</div>
+    <p className="font-bold text-inherit">Astro + Fastify Starter</p>
+  </div>
+  <nav className="hidden sm:flex gap-4 sm:justify-end">
+    <div>
+      <DarkToggle client:load />
+    </div>
+    {
+      !user ? (
+        <>
+          <div>
+            <a href="/login">Login</a>
+          </div>
+          <div>
+            <a href="/register">Register</a>
+          </div>
+        </>
+      ) : (
+        <div>
+          <LogoutButton client:load />
+        </div>
+      )
+    }
+  </nav>
+</div>

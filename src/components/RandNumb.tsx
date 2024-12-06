@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { client } from '../api/client.ts'
-import { Button } from '@nextui-org/button'
 
 export default function RandNumb() {
   const [count, setCount] = useState(0)
@@ -17,7 +16,7 @@ export default function RandNumb() {
     <div>
       {count}
       <div>
-        <Button color={'primary'}>test client</Button>
+        <button>test client</button>
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 ---
-import { ViewTransitions } from 'astro:transitions'
-import Navigation from '../components/Navigation'
+import { ClientRouter } from 'astro:transitions'
+import Navigation from '../components/Navigation.astro'
+import '../styles.css'
 
 interface Props {
   title: string
@@ -8,7 +9,6 @@ interface Props {
 
 const { title } = Astro.props
 const { user } = Astro.locals
-const { pathname } = Astro.url
 ---
 
 <!doctype html>
@@ -36,14 +36,14 @@ const { pathname } = Astro.url
       setDarkMode(document)
 
       document.addEventListener('astro:before-swap', (event) => {
-        // prevents screen flashing
+        // prevents screen flashing with client router
         setDarkMode(event.newDocument)
       })
     </script>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
-  <body class="text-gray-900 dark:text-gray-100">
-    <Navigation user={user} currentPath={pathname} client:only="react" />
+  <body class="bg-white text-gray-900 dark:text-gray-100 dark:bg-gray-950">
+    <Navigation />
     <slot />
   </body>
 </html>

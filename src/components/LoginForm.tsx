@@ -1,33 +1,36 @@
-import { useForm, Controller } from 'react-hook-form'
-import { Form } from 'react-aria-components'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '@nextui-org/input'
-import { Button } from '@nextui-org/button'
-import { client, type RouterInput } from '../api/client.ts'
+import {
+  Form,
+  TextField,
+  Label,
+  Input,
+  FieldError,
+  Button,
+} from 'react-aria-components'
+import { client } from '../api/client.ts'
 import { useState } from 'react'
 import { FaEyeSlash, FaEye, FaRocket } from 'react-icons/fa6'
 import { navigate } from 'astro:transitions/client'
+import { useFormStatus } from 'react-dom'
 
-const schema = z.object({
-  username: z.string().min(3).max(31),
-  password: z.string().min(6).max(255),
-})
+function Submit() {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button type="submit" className="flex items-center gap-2 btn">
+      {pending ? 'Submitting' : 'Submit'} <FaRocket />
+    </Button>
+  )
+}
 
 export default function LoginForm() {
-  const { handleSubmit, control } = useForm<RouterInput['auth']['login']>({
-    defaultValues: {
-      username: '',
-      password: '',
-    },
-    resolver: zodResolver(schema),
-  })
   const [visible, setVisible] = useState<boolean>(false)
   const [formError, setFormError] = useState<null | string>('')
 
-  const onSubmit = async (values: RouterInput['auth']['login']) => {
-    const result = await client.auth.login.mutate(values)
-
+  const loginAction = async (formData: FormData) => {
+    const result = await client.auth.login.mutate({
+      username: formData.get('username') as string,
+      password: formData.get('password') as string,
+    })
     if (!result.ok) {
       setFormError(result.error)
     } else {
@@ -42,71 +45,40 @@ export default function LoginForm() {
           {formError}
         </div>
       ) : null}
-      <Form onSubmit={handleSubmit(onSubmit)} className="space-y-3 max-w-xs">
-        <Controller
-          control={control}
-          name={'username'}
-          render={({
-            field: { name, value, onChange, onBlur, ref },
-            fieldState: { invalid, error },
-          }) => (
-            <Input
-              ref={ref}
-              name={name}
-              value={value}
-              onChange={onChange}
-              onBlur={onBlur}
-              validationBehavior="aria"
-              variant="faded"
-              isInvalid={invalid}
-              label={'Username'}
-              className="max-w-xs"
-              type={'text'}
-              errorMessage={error?.message}
-              autoComplete="username"
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name={'password'}
-          render={({
-            field: { name, value, onChange, onBlur, ref },
-            fieldState: { invalid, error },
-          }) => (
-            <Input
-              ref={ref}
-              name={name}
-              value={value}
-              onChange={onChange}
-              onBlur={onBlur}
-              isInvalid={invalid}
-              label={'Password'}
-              className="max-w-xs"
-              type={!visible ? 'password' : 'text'}
-              variant="faded"
-              autoComplete="current-password"
-              endContent={
-                <button
-                  className="focus:outline-none"
-                  onClick={() => setVisible(!visible)}
-                  type="button"
-                >
-                  {visible ? (
-                    <FaEye className="text-2xl text-default-400 pointer-events-none" />
-                  ) : (
-                    <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-                  )}
-                </button>
-              }
-              errorMessage={error?.message}
-            />
-          )}
-        />
-        <div>
-          <Button color="primary" type="submit">
-            Submit <FaRocket />
+      <Form action={loginAction} className="space-y-3 max-w-xs">
+        <TextField
+          name="username"
+          type="text"
+          className="flex flex-col"
+          autoComplete="username"
+          minLength={2}
+          isRequired
+        >
+          <Label>Username</Label>
+          <Input />
+          <FieldError />
+        </TextField>
+        <TextField
+          name="password"
+          type={visible ? 'text' : 'password'}
+          className="relative flex flex-col"
+          autoComplete="current-password"
+          minLength={6}
+          isRequired
+        >
+          <Label>Password</Label>
+          <Input />
+          <Button
+            className="absolute top-0 right-2 text-gray-800 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-300"
+            type="button"
+            onPress={() => setVisible(!visible)}
+          >
+            {visible ? <FaEyeSlash /> : <FaEye />}
           </Button>
+          <FieldError />
+        </TextField>
+        <div>
+          <Submit />
         </div>
       </Form>
     </div>

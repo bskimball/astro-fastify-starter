@@ -1,6 +1,6 @@
-import { Switch } from '@nextui-org/switch'
 import { useEffect, useState } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa6'
+import { Button } from 'react-aria-components'
 
 function getInitialState(): boolean {
   if (typeof window === 'undefined') {
@@ -32,18 +32,8 @@ export default function DarkToggle() {
   }, [isSelected])
 
   return (
-    <Switch
-      isSelected={isSelected}
-      onValueChange={setIsSelected}
-      thumbIcon={({ isSelected, className }) =>
-        isSelected ? (
-          <FaMoon className={className} />
-        ) : (
-          <FaSun className={className} />
-        )
-      }
-    >
-      Dark Mode
-    </Switch>
+    <Button onPress={() => setIsSelected(!isSelected)}>
+      {isSelected ? <FaMoon /> : <FaSun />}
+    </Button>
   )
 }

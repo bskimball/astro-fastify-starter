@@ -1,5 +1,4 @@
 import { type ReactNode } from 'react'
-import { Card as NextCard, CardHeader, CardBody } from '@nextui-org/card'
 
 type Props = {
   title: string
@@ -9,13 +8,13 @@ type Props = {
 
 export default function Card(props: Props) {
   return (
-    <NextCard className="p-4">
-      <CardHeader>
+    <div className="p-4 dark:border rounded-xl shadow-xl">
+      <div>
         <a href={props.href || ''} className="text-lg font-semibold">
           {props.title}
         </a>
-      </CardHeader>
-      <CardBody>{props.children || null}</CardBody>
-    </NextCard>
+      </div>
+      <div>{props.children || null}</div>
+    </div>
   )
 }
