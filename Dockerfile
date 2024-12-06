@@ -1,14 +1,18 @@
 FROM node:22-alpine
 
-RUN apk update && apk add --no-cache sqlite curl
+RUN apk update && apk add --no-cache bash curl sqlite
 
-WORKDIR /app
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY package*.json ./
+WORKDIR /home/node/app
+
+COPY --chown=node:node package*.json ./
+
+USER node
 
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 
 RUN npm run generate
 RUN npm run migrate
