@@ -34,8 +34,8 @@ export default function RegisterForm() {
       setFormError('Passwords do not match')
     } else {
       const result = await client.auth.register.mutate({
-        username: values.get('username') as string,
-        password: values.get('password') as string,
+        username: String(values.get('username')),
+        password: String(values.get('password')),
       })
 
       if (!result.ok) {

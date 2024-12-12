@@ -28,13 +28,13 @@ export default function LoginForm() {
 
   const loginAction = async (formData: FormData) => {
     const result = await client.auth.login.mutate({
-      username: formData.get('username') as string,
-      password: formData.get('password') as string,
+      username: String(formData.get('username')),
+      password: String(formData.get('password')),
     })
-    if (!result.ok) {
-      setFormError(result.error)
-    } else {
+    if (result.ok) {
       await navigate(result.redirect)
+    } else {
+      setFormError(result.error)
     }
   }
 
