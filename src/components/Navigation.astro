@@ -1,42 +1,45 @@
 ---
 import DarkToggle from './DarkToggle.tsx'
 import LogoutButton from './LogoutButton'
+import HeaderLink from './HeaderLink.astro'
 
 const { user } = Astro.locals
 ---
 
-<div>
-  <nav>
-    <div>
-      <a href="/">Home</a>
-    </div>
-    <div>
-      <a href="/examples">Examples</a>
-    </div>
-  </nav>
-  <div className="flex flex-col">
-    <div className="text-3xl font-bold">Fastro</div>
-    <p className="font-bold text-inherit">Astro + Fastify Starter</p>
-  </div>
-  <nav className="hidden sm:flex gap-4 sm:justify-end">
-    <div>
-      <DarkToggle client:load />
-    </div>
-    {
-      !user ? (
-        <>
+<div
+  class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-gray-950"
+>
+  <nav
+    class="container mx-auto px-4 sm:flex sm:items-center sm:justify-between"
+  >
+    <a
+      class="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
+      href="#"
+      aria-label="Brand"
+    >
+      <div className="text-3xl font-bold">Fastro</div>
+      <p className="font-bold text-inherit">Astro + Fastify Starter</p>
+    </a>
+    <div
+      class="flex flex-row items-center gap-5 mt-5 sm:justify-end sm:mt-0 sm:ps-5"
+    >
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/examples">Examples</HeaderLink>
+      <div>
+        <DarkToggle client:load />
+      </div>
+      {
+        !user ? (
+          <>
+            <HeaderLink href="/login">Login</HeaderLink>
+            <HeaderLink href="/register">Register</HeaderLink>
+          </>
+        ) : (
           <div>
-            <a href="/login">Login</a>
+            <LogoutButton client:load />
           </div>
-          <div>
-            <a href="/register">Register</a>
-          </div>
-        </>
-      ) : (
-        <div>
-          <LogoutButton client:load />
-        </div>
-      )
-    }
+        )
+      }
+    </div>
   </nav>
 </div>

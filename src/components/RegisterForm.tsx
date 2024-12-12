@@ -60,6 +60,7 @@ export default function RegisterForm() {
           className="flex flex-col"
           minLength={2}
           isRequired
+          autoComplete="username"
         >
           <Label>Username</Label>
           <Input />
@@ -71,6 +72,7 @@ export default function RegisterForm() {
           className="relative flex flex-col"
           minLength={6}
           isRequired
+          autoComplete="password"
         >
           <Label>Password</Label>
           <Input />
@@ -89,6 +91,7 @@ export default function RegisterForm() {
           className="relative flex flex-col"
           minLength={6}
           isRequired
+          autoComplete="none"
         >
           <Label>Password Again</Label>
           <Input />
