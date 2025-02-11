@@ -1,6 +1,5 @@
 # *** Latest ***
-I have updated to Astro v5 and React 19. I have removed Next ui and react-hook-form.
-I switched to using react actions api for forms. 
+This is using Astro v5, Tailwind v4 and React 19.  
 
 # Astro Fastify Starter
 
