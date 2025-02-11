@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config'
 import react from '@astrojs/react'
-import tailwind from '@astrojs/tailwind'
+import tailwindcss from '@tailwindcss/vite'
 import node from '@astrojs/node'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), tailwind()],
+  integrations: [react()],
   output: 'server',
   adapter: node({ mode: 'middleware' }),
   security: {
@@ -15,6 +15,7 @@ export default defineConfig({
     prefetchAll: true,
   },
   vite: {
+    plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ['oslo', '@node-rs/argon2', '@node-rs/bcrypt'],
     },
@@ -22,9 +23,9 @@ export default defineConfig({
       proxy: {
         '/trpc': {
           target: 'http://localhost:8080',
-          ws: true
-        }
-      }
-    }
+          ws: true,
+        },
+      },
+    },
   },
 })
